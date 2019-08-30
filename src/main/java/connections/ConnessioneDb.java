@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import models.Account;
+import models.Transazione;
 
 public class ConnessioneDb {
 
@@ -60,4 +61,26 @@ public class ConnessioneDb {
 
 	}
 	
+	public static void addTransazione (String username, Transazione transazione) throws ClassNotFoundException, SQLException
+	{
+		String query1 = "select account.idAccount from honeymoney.account where account.username= ?;";
+		PreparedStatement statement = connectionDb().prepareStatement(query1);
+		statement.setString(1, username);
+		ResultSet result = statement.executeQuery();
+		int id = 0;
+	    while (result.next())
+	    {
+	    	id = result.getInt(1);
+	    }		
+				
+		String query2 = "insert into honeymoney.transazioni (idAccount, data, descrizione, categoria, importo) values (?, ?, ?, ?, ?);";
+		PreparedStatement ps = connectionDb().prepareStatement(query2);
+		ps.setInt(1, id);
+		ps.setString(2, transazione.getData());
+		ps.setString(3, transazione.getDescrizione());
+		ps.setString(4, transazione.getCategoria());
+		ps.setInt(5, transazione.getImporto());
+		ps.executeUpdate();
+		
+	}
 }

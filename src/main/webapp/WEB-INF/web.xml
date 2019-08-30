@@ -36,6 +36,15 @@
     <url-pattern>/transaction</url-pattern>
   </servlet-mapping>
   
+    <servlet>
+    <servlet-name>inserimentoTransazioni</servlet-name>
+    <servlet-class>servlets.InsertTransactionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>inserimentoTransazioni</servlet-name>
+    <url-pattern>/insert</url-pattern>
+  </servlet-mapping>
+  
   <servlet>
     <servlet-name>visualizzazioniTransazioni</servlet-name>
     <servlet-class>servlets.ViewServlet</servlet-class>
@@ -45,7 +54,7 @@
     <url-pattern>/view</url-pattern>
   </servlet-mapping>
   
-  <session-config>
-  <session-timeout>1</session-timeout>
-  </session-config>
+<!--   <session-config> -->
+<!--   <session-timeout>15</session-timeout> -->
+<!--   </session-config> -->
 </web-app>

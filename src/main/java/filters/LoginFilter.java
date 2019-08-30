@@ -38,6 +38,7 @@ public class LoginFilter implements Filter{
 		String pass = req.getParameter("pass");
 		Account account = new Account (user, pass);
 		HttpSession session = req.getSession();
+		session.setMaxInactiveInterval(60*30);
 		session.setAttribute("user", user);
 		try {
 			if(ConnessioneDb.checkLogin(account)) {

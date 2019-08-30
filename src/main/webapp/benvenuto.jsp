@@ -9,6 +9,10 @@
 <body>
 
 <h1>Benvenuto <%=session.getAttribute("user")%> ! </h1>
+  <% if(request.getAttribute("messaggio") != null) {%>
+  <%String messaggio = (String)request.getAttribute("messaggio");  %>
+  <p style="color:red;"><%=messaggio %> </p>
+  <%} %>
 <h2>Il tuo saldo &egrave</h2>
 <p>Le spese effettuate in questo mese sono di &#8364</p>
 <p>Le entrate in questo mese sono di &#8364</p>
@@ -21,8 +25,8 @@
   <br>
   <br>
   <input type="submit" value="Esegui">
-</form>
- 
+</form> 
+
 <form action="view" method="POST">
 <p>Scegli tra le opzioni:</p>
   <input type="radio" name="scelta" value="1"> Visualizza tutte le transazioni effettuate<br>
