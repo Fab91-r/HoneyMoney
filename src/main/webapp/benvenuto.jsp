@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    <%@page import="manage.GestioneSaldo"%>
+   <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
@@ -7,13 +8,24 @@
 <title>Insert title here</title>
 </head>
 <body>
+<%String username = (String)session.getAttribute("user"); %>
+<h1>Benvenuto <%=username%> ! </h1>
 
-<h1>Benvenuto <%=session.getAttribute("user")%> ! </h1>
   <% if(request.getAttribute("messaggio") != null) {%>
-  <%String messaggio = (String)request.getAttribute("messaggio");  %>
-  <p style="color:red;"><%=messaggio %> </p>
+  <%String messaggio = (String)request.getAttribute("messaggio");  %> 
+  <p style="color:green;"><%=messaggio %> </p>
   <%} %>
-<h2>Il tuo saldo &egrave</h2>
+  
+  <h2>Il tuo saldo &egrave
+  <%int saldo =GestioneSaldo.getSaldoCorrente(username);%>
+  <% if (saldo <0) { %>
+<font color="red"><%=saldo%></font>
+<% } %>
+<%if (saldo >= 0){ %>
+<font color="blue"><%=saldo%></font> 
+<% } %>
+ &#8364</h2>
+
 <p>Le spese effettuate in questo mese sono di &#8364</p>
 <p>Le entrate in questo mese sono di &#8364</p>
 <p>Gestisci Transazioni:</p>

@@ -1,3 +1,4 @@
+    <%@page import="manage.GestioneSaldo"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -7,23 +8,27 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="insert" method= "POST">
+<%String username = (String)session.getAttribute("user"); %>
+<%GestioneSaldo.getSaldoCorrente(username);%>
+<form action="insert" method= "POST" align="center">
   <div class="container">
     <p>Inserisci una nuova transazione</p>
-    <label for="data"><b>Data&nbsp&nbsp&nbsp&nbsp&nbsp</b></label>
-    <input type="date" placeholder="Inserisci data" name="data" required>
+    <label for="data"><b>Data</b></label>
+    <input type="date" placeholder="  Inserisci data" name="data" required>
 	<br>
 	<br>
     <label for="descrizione"><b>Descrizione</b></label>
-    <input type="text" placeholder="Inserisci descrizione" name="descrizione" required>
+    <input type="text" placeholder="  Inserisci descrizione" name="descrizione" required>
     <br>
     <br>
-    <label for="categoria"><b>Categoria&nbsp&nbsp</b></label>
-    <input type="text" placeholder="Inserisci categoria" name="categoria" required>
+    <label for="categoria"><b>Categoria</b></label>
+    <input type="text" placeholder="  Inserisci categoria" name="categoria" required>
     <br>
     <br>
-    <label for="importo"><b>Importo&nbsp&nbsp&nbsp</b></label>
-    <input type="text" placeholder="Inserisci importo" name="importo" required>
+    <label for="importo"><b>Importo</b></label>
+    <input type="text" placeholder="  Inserisci importo" name="importo" required>
+    <input type="radio" name="scelta" value="1" required> Entrata
+    <input type="radio" name="scelta" value="-1" required> Spesa
     <br>
     <br>
     <hr>

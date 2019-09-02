@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import connections.ConnessioneDb;
+import manage.GestioneSaldo;
 import models.Transazione;
 
 public class InsertTransactionServlet extends HttpServlet {
@@ -19,13 +20,24 @@ public class InsertTransactionServlet extends HttpServlet {
 	
 		HttpSession session = req.getSession();
 		String user = (String)session.getAttribute("user");
+		int importo = Integer.parseInt(req.getParameter("importo"));
+		int scelta = Integer.parseInt(req.getParameter("scelta"));
+	
+		try {	
+			int saldo =GestioneSaldo.getSaldoCorrente(user);
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
 		String data = req.getParameter("data");
 		String descrizione = req.getParameter("descrizione");
 		String categoria = req.getParameter("categoria");
-		int importo = Integer.parseInt(req.getParameter("importo"));
+		
 		Transazione nuovaTransazione = new Transazione (data, descrizione, categoria, importo);
 		try {
-			ConnessioneDb.addTransazione(user, nuovaTransazione);
+			ConnessioneDb.addTransazione(user, nuovaTransazione, scelta);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
