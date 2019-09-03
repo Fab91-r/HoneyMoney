@@ -10,7 +10,7 @@ public class GestioneSaldo {
 		
 		int saldo = ConnessioneDb.getSaldo(username);
 		 
-		return saldo;
+		return saldo;  
 		
 		
 	}

@@ -34,5 +34,11 @@
     <hr>
      <input type="submit" value="Inserisci">
 </form>
+<br>
+<br>
+ <form action="benvenuto.jsp" align="center">
+ <input type="submit" value="Torna alla home">
+  </form>
+  <br>
 </body>
 </html>

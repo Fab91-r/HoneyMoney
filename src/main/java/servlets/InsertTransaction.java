@@ -13,7 +13,7 @@ import connections.ConnessioneDb;
 import manage.GestioneSaldo;
 import models.Transazione;
 
-public class InsertTransactionServlet extends HttpServlet {
+public class InsertTransaction extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

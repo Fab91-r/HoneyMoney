@@ -56,7 +56,11 @@ $(document).ready(function () {
   </div>
   
 </form>
-
+<br>
+ <form action="intro.jsp" align="center">
+ <input type="submit" value="Torna alla home">
+  </form>
+  <br>
 </body>
 </html>
 

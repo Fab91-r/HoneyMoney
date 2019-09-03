@@ -29,6 +29,10 @@
   </div>
   <hr>
 </form>
+  <% if(request.getAttribute("messaggio") != null) {%>
+  <%String messaggio = (String)request.getAttribute("messaggio");  %> 
+  <p style="color:red;" align = "center"><%=messaggio %> </p>
+  <%} %>
     <br>
 	<form action = "register" align="center">
 	<p>Non sei registrato? <input type="submit" value="Registrati"></p>

@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
   <servlet>
     <servlet-name>registrazioneServlet</servlet-name>
-    <servlet-class>servlets.RegisterServlet</servlet-class>
+    <servlet-class>servlets.Register</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>registrazioneServlet</servlet-name>
@@ -11,7 +11,7 @@
   <servlet>
   
     <servlet-name>paginaDiBenvenuto</servlet-name>
-    <servlet-class>servlets.WelcomeServlet</servlet-class>
+    <servlet-class>servlets.Welcome</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>paginaDiBenvenuto</servlet-name>
@@ -29,7 +29,7 @@
   
   <servlet>
     <servlet-name>gestioneTransazioni</servlet-name>
-    <servlet-class>servlets.TransactionServlet</servlet-class>
+    <servlet-class>servlets.Transaction</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>gestioneTransazioni</servlet-name>
@@ -38,11 +38,20 @@
   
     <servlet>
     <servlet-name>inserimentoTransazioni</servlet-name>
-    <servlet-class>servlets.InsertTransactionServlet</servlet-class>
+    <servlet-class>servlets.InsertTransaction</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>inserimentoTransazioni</servlet-name>
     <url-pattern>/insert</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <servlet-name>modificaTransazioni</servlet-name>
+    <servlet-class>servlets.ModifyTransaction</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>modificaTransazioni</servlet-name>
+    <url-pattern>/modify</url-pattern>
   </servlet-mapping>
   
   <servlet>

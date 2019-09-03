@@ -10,6 +10,9 @@ import java.sql.Statement;
 import models.Account;
 import models.Transazione;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ConnessioneDb {
 
 	private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
@@ -61,7 +64,7 @@ public class ConnessioneDb {
 
 	}
 	
-	public static void addTransazione (String username, Transazione transazione, int scelta) throws ClassNotFoundException, SQLException
+	public static int getId (String username) throws ClassNotFoundException, SQLException
 	{
 		String query1 = "select account.idAccount from honeymoney.account where account.username= ?;";
 		PreparedStatement statement = connectionDb().prepareStatement(query1);
@@ -72,9 +75,15 @@ public class ConnessioneDb {
 	    {
 	    	id = result.getInt(1);
 	    }		
-				
-		String query2 = "insert into honeymoney.transazioni (idAccount, data, descrizione, categoria, importo) values (?, ?, ?, ?, ?);";
-		PreparedStatement ps = connectionDb().prepareStatement(query2);
+	    return id;
+	}
+	
+	public static void addTransazione (String username, Transazione transazione, int scelta) throws ClassNotFoundException, SQLException
+	{
+		
+		int id = ConnessioneDb.getId(username);
+		String query = "insert into honeymoney.transazioni (idAccount, data, descrizione, categoria, importo) values (?, ?, ?, ?, ?);";
+		PreparedStatement ps = connectionDb().prepareStatement(query);
 		ps.setInt(1, id);
 		ps.setString(2, transazione.getData());
 		ps.setString(3, transazione.getDescrizione());
@@ -93,26 +102,39 @@ public class ConnessioneDb {
 	
 	public static int getSaldo(String username) throws SQLException, ClassNotFoundException {
 		
-		String query1 = "select account.idAccount from honeymoney.account where account.username = ?;";
-		PreparedStatement ps1 = connectionDb().prepareStatement(query1);
-		ps1.setString(1, username);		
-		ResultSet result = ps1.executeQuery();
-		int id = 0;
-		while(result.next())
-		{
-			id = result.getInt(1);
-		}
-		
-		String query2 = "select transazioni.importo from honeymoney.transazioni where transazioni.idAccount= ?;";
-		PreparedStatement ps2 = connectionDb().prepareStatement(query2);
-		ps2.setInt(1, id);
-		ResultSet result2 = ps2.executeQuery();
+		int id = ConnessioneDb.getId(username);		
+		String query = "select transazioni.importo from honeymoney.transazioni where transazioni.idAccount= ?;";
+		PreparedStatement ps = connectionDb().prepareStatement(query);
+		ps.setInt(1, id);
+		ResultSet result = ps.executeQuery();
 		int saldo = 0;
-	    while (result2.next())
+	    while (result.next())
 	    {
-	    	saldo = saldo + result2.getInt(1);
+	    	saldo = saldo + result.getInt(1);
 	    }	
 	    return saldo;
 	}
+
+	public static List<Transazione> getTransazioni(String username) throws ClassNotFoundException, SQLException {
+
+		List <Transazione> listaTransazioni = new ArrayList<Transazione>();
+		int id = ConnessioneDb.getId(username);	
+		String query = "select data, descrizione, categoria, importo from transazioni where idAccount = ?;";
+		PreparedStatement statement = connectionDb().prepareStatement(query);
+		statement.setInt(1,  id);
+		ResultSet result = statement.executeQuery();
+		while(result.next())
+		{
+			String data = result.getString(1);
+			String descrizione = result.getString(2);
+			String categoria = result.getString(3);
+			int importo = result.getInt(4);
+			Transazione transazione = new Transazione (data, descrizione, categoria, importo );
+			listaTransazioni.add(transazione);		
+		}
+		return listaTransazioni;
+	}
+
+
 	
 }

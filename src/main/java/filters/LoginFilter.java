@@ -38,23 +38,16 @@ public class LoginFilter implements Filter{
 		String pass = req.getParameter("pass");
 		Account account = new Account (user, pass);
 		HttpSession session = req.getSession();
-//		int saldo = 0;
-//		try {
-//			saldo = Integer.parseInt(""+ConnessioneDb.getSaldo(user));
-//		} catch (ClassNotFoundException e1) {
-//			e1.printStackTrace();
-//		} catch (SQLException e1) {
-//			e1.printStackTrace();
-//		}
 		session.setMaxInactiveInterval(60*30);
 		session.setAttribute("user", user);
-//		session.setAttribute("saldo", saldo);
 		try {
 			if(ConnessioneDb.checkLogin(account)) {
 				chain.doFilter(req, res);
 			}
 			else {
-				res.sendRedirect("intro.jsp");
+				String messaggio = "LOGIN FALLITO UTENTE NON REGISTRATO O DATI ERRATI";
+				req.setAttribute("messaggio", messaggio);
+				req.getRequestDispatcher("/intro.jsp").forward(req, res);
 							
 			}
 		} catch (ClassNotFoundException e) {
