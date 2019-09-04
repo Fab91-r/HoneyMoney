@@ -43,7 +43,6 @@ public class InsertTransaction extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		String messaggio = "TRANSAZIONE INSERITA CON SUCCESSO!";
 		req.setAttribute("messaggio", messaggio);
 		

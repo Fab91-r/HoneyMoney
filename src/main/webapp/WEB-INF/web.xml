@@ -54,14 +54,42 @@
     <url-pattern>/modify</url-pattern>
   </servlet-mapping>
   
+     <servlet>
+    <servlet-name>cancellaTransazioni</servlet-name>
+    <servlet-class>servlets.DeleteTransaction</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>cancellaTransazioni</servlet-name>
+    <url-pattern>/delete</url-pattern>
+  </servlet-mapping>
+  
+       <servlet>
+    <servlet-name>gestioneCategorie</servlet-name>
+    <servlet-class>servlets.Categorie</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>gestioneCategorie</servlet-name>
+    <url-pattern>/categorie</url-pattern>
+  </servlet-mapping>
+  
   <servlet>
     <servlet-name>visualizzazioniTransazioni</servlet-name>
-    <servlet-class>servlets.ViewServlet</servlet-class>
+    <servlet-class>servlets.View</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>visualizzazioniTransazioni</servlet-name>
     <url-pattern>/view</url-pattern>
   </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>inserisciCategoria</servlet-name>
+    <servlet-class>servlets.InsertCategoria</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>inserisciCategoria</servlet-name>
+    <url-pattern>/insertCat</url-pattern>
+  </servlet-mapping>
+  
   
 <!--   <session-config> -->
 <!--   <session-timeout>15</session-timeout> -->

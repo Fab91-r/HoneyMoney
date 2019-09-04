@@ -13,24 +13,26 @@
 
   <% if(request.getAttribute("messaggio") != null) {%>
   <%String messaggio = (String)request.getAttribute("messaggio");  %> 
-  <p style="color:green;"><%=messaggio %> </p>
+  <p style="color:#00cc00;"><%=messaggio %> </p>
   <%} %>
   
   <h2>Il tuo saldo &egrave
   <%int saldo =GestioneSaldo.getSaldoCorrente(username);%>
   <% if (saldo <0) { %>
-<font color="red"><%=saldo%></font>
+<font color="#ff5050"><%=saldo%></font>
 <% } %>
-<%if (saldo >= 0){ %>
-<font color="blue"><%=saldo%></font> 
+  <% if (saldo == 0) { %>
+<font color="#00cc00"><%=saldo%></font>
+<% } %>
+<%if (saldo > 0){ %>
+<font color="#0099ff"><%=saldo%></font> 
 <% } %>
  &#8364</h2>
 
 <p>Le spese effettuate in questo mese sono di &#8364</p>
 <p>Le entrate in questo mese sono di &#8364</p>
-<p>Gestisci Transazioni:</p>
+<p>Gestisci le transazioni:</p>
 <form action="transaction" method="POST">
-<p>Scegli tra le opzioni:</p>
   <input type="radio" name="scelta" value="1"> Inserisci<br>
   <input type="radio" name="scelta" value="2"> Modifica <br>
   <input type="radio" name="scelta" value="3"> Elimina
@@ -38,12 +40,24 @@
   <br>
   <input type="submit" value="Esegui">
 </form> 
-
+<hr>
+<p>Gestisci le categorie delle transazioni:</p>
+<form action="categorie" method="POST">
+  <input type="radio" name="scelta" value="1"> Visualizza<br>
+  <input type="radio" name="scelta" value="2"> Inserisci<br>
+  <input type="radio" name="scelta" value="3"> Modifica <br>
+  <input type="radio" name="scelta" value="4"> Elimina
+  <br>
+  <br>
+  <input type="submit" value="Esegui">
+</form> 
+<hr>
 <form action="view" method="POST">
-<p>Scegli tra le opzioni:</p>
-  <input type="radio" name="scelta" value="1"> Visualizza tutte le transazioni effettuate<br>
-  <input type="radio" name="scelta" value="2"> Visualizza le transazioni positive <br>
-  <input type="radio" name="scelta" value="3"> Visualizza le transazioni negative
+<p>Visualizza le transazioni effettuate:</p>
+  <input type="radio" name="scelta" value="1"> Transazioni totali <br>
+  <input type="radio" name="scelta" value="2"> Transazioni positive <br>
+   <input type="radio" name="scelta" value="3"> Transazioni negtive <br>
+  <input type="radio" name="scelta" value="4"> Transazioni per categoria
   <br>
   <br>
   <input type="submit" value="Esegui">

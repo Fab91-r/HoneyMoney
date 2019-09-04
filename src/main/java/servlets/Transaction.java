@@ -14,33 +14,32 @@ import javax.servlet.http.HttpSession;
 import connections.ConnessioneDb;
 import models.Transazione;
 
-public class Transaction extends HttpServlet{
-	
+public class Transaction extends HttpServlet {
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+
 		String scelta = req.getParameter("scelta");
 		HttpSession session = req.getSession();
-		String user = (String)session.getAttribute("user");
+		String user = (String) session.getAttribute("user");
+		List<Transazione> listaTransazioni = new ArrayList<Transazione>();
+		try {
+			listaTransazioni.addAll(ConnessioneDb.getTransazioni(user));
+
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		req.setAttribute("listaTransazioni", listaTransazioni);
 
 		if ("1".equals(scelta)) {
-			getServletContext().getRequestDispatcher("/inserimentoTransazione.jsp").forward(req, resp);
+			getServletContext().getRequestDispatcher("/inserisciTransazione.jsp").forward(req, resp);
 		} else if ("2".equals(scelta)) {
-			
-			List<Transazione> listaTransazioni = new ArrayList<Transazione>();
-			try {
-				listaTransazioni.addAll(ConnessioneDb.getTransazioni(user));
-				
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
-			req.setAttribute("listaTransazioni", listaTransazioni);
+
 			getServletContext().getRequestDispatcher("/modificaTransazione.jsp").forward(req, resp);
-		}
-		else {
+		} else {
 			getServletContext().getRequestDispatcher("/cancellaTransazione.jsp").forward(req, resp);
 		}
-		
+
 	}
 
 }

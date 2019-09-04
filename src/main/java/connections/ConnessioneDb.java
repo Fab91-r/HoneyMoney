@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import models.Account;
+import models.Categoria;
 import models.Transazione;
 
 import java.util.ArrayList;
@@ -39,16 +40,14 @@ public class ConnessioneDb {
 		return true;
 	}
 
-	
-	public static void addAccount(Account account) throws ClassNotFoundException, SQLException
-	{
+	public static void addAccount(Account account) throws ClassNotFoundException, SQLException {
 		String query = "insert into honeymoney.account (username, password) values (?, ?);";
 		PreparedStatement ps = connectionDb().prepareStatement(query);
 		ps.setString(1, account.getUsername());
 		ps.setString(2, account.getPassword());
 		ps.executeUpdate();
 	}
-	
+
 	public static boolean checkLogin(Account account) throws SQLException, ClassNotFoundException {
 		String query = "select account.username, account.password from honeymoney.account;";
 		Statement statement = connectionDb().createStatement();
@@ -63,24 +62,22 @@ public class ConnessioneDb {
 		return false;
 
 	}
-	
-	public static int getId (String username) throws ClassNotFoundException, SQLException
-	{
+
+	public static int getId(String username) throws ClassNotFoundException, SQLException {
 		String query1 = "select account.idAccount from honeymoney.account where account.username= ?;";
 		PreparedStatement statement = connectionDb().prepareStatement(query1);
 		statement.setString(1, username);
 		ResultSet result = statement.executeQuery();
 		int id = 0;
-	    while (result.next())
-	    {
-	    	id = result.getInt(1);
-	    }		
-	    return id;
+		while (result.next()) {
+			id = result.getInt(1);
+		}
+		return id;
 	}
-	
-	public static void addTransazione (String username, Transazione transazione, int scelta) throws ClassNotFoundException, SQLException
-	{
-		
+
+	public static void addTransazione(String username, Transazione transazione, int scelta)
+			throws ClassNotFoundException, SQLException {
+
 		int id = ConnessioneDb.getId(username);
 		String query = "insert into honeymoney.transazioni (idAccount, data, descrizione, categoria, importo) values (?, ?, ?, ?, ?);";
 		PreparedStatement ps = connectionDb().prepareStatement(query);
@@ -88,53 +85,149 @@ public class ConnessioneDb {
 		ps.setString(2, transazione.getData());
 		ps.setString(3, transazione.getDescrizione());
 		ps.setString(4, transazione.getCategoria());
-		if (scelta == 1)
-		{
-		ps.setInt(5, transazione.getImporto());
+		if (scelta == 1) {
+			ps.setInt(5, transazione.getImporto());
+		} else {
+			ps.setInt(5, (scelta) * transazione.getImporto());
 		}
-		else
-		{
-			ps.setInt(5, (scelta)*transazione.getImporto());
-		}
-		ps.executeUpdate();	
+		ps.executeUpdate();
 
 	}
-	
+
 	public static int getSaldo(String username) throws SQLException, ClassNotFoundException {
-		
-		int id = ConnessioneDb.getId(username);		
+
+		int id = ConnessioneDb.getId(username);
 		String query = "select transazioni.importo from honeymoney.transazioni where transazioni.idAccount= ?;";
 		PreparedStatement ps = connectionDb().prepareStatement(query);
 		ps.setInt(1, id);
 		ResultSet result = ps.executeQuery();
 		int saldo = 0;
-	    while (result.next())
-	    {
-	    	saldo = saldo + result.getInt(1);
-	    }	
-	    return saldo;
+		while (result.next()) {
+			saldo = saldo + result.getInt(1);
+		}
+		return saldo;
 	}
 
 	public static List<Transazione> getTransazioni(String username) throws ClassNotFoundException, SQLException {
 
-		List <Transazione> listaTransazioni = new ArrayList<Transazione>();
-		int id = ConnessioneDb.getId(username);	
-		String query = "select data, descrizione, categoria, importo from transazioni where idAccount = ?;";
+		List<Transazione> listaTransazioni = new ArrayList<Transazione>();
+		int idAccount = ConnessioneDb.getId(username);
+		String query = "select idtransazione, data, descrizione, categoria, importo from transazioni where idAccount = ?;";
 		PreparedStatement statement = connectionDb().prepareStatement(query);
-		statement.setInt(1,  id);
+		statement.setInt(1, idAccount);
 		ResultSet result = statement.executeQuery();
-		while(result.next())
-		{
-			String data = result.getString(1);
-			String descrizione = result.getString(2);
-			String categoria = result.getString(3);
-			int importo = result.getInt(4);
-			Transazione transazione = new Transazione (data, descrizione, categoria, importo );
-			listaTransazioni.add(transazione);		
+		while (result.next()) {
+			int idTrans = result.getInt(1);
+			String data = result.getString(2);
+			String descrizione = result.getString(3);
+			String categoria = result.getString(4);
+			int importo = result.getInt(5);
+			Transazione transazione = new Transazione(data, descrizione, categoria, importo);
+			transazione.setId(idTrans);
+			listaTransazioni.add(transazione);
 		}
 		return listaTransazioni;
 	}
 
+	public static void updateTransazione(Transazione transazione, int id, int scelta)
+			throws ClassNotFoundException, SQLException {
 
+		String query = "update transazioni set data = ?, descrizione = ?, categoria = ?, importo = ? where idTransazione = ?";
+		PreparedStatement ps = connectionDb().prepareStatement(query);
+		ps.setString(1, transazione.getData());
+		ps.setString(2, transazione.getDescrizione());
+		ps.setString(3, transazione.getCategoria());
+		if (scelta == 1) {
+			ps.setInt(4, transazione.getImporto());
+		} else {
+			ps.setInt(4, (scelta) * transazione.getImporto());
+		}
+		ps.setInt(5, id);
+		ps.executeUpdate();
+
+	}
+
+	public static void deleteTransazione(int id) throws ClassNotFoundException, SQLException {
+		String query = "delete from transazioni where idTransazione = ?;";
+		PreparedStatement statement = connectionDb().prepareStatement(query);
+		statement.setInt(1, id);
+		statement.executeUpdate();
+
+	}
 	
+	public static int getIdLinkedTocategoria(String username) throws ClassNotFoundException, SQLException
+	{
+		int id = ConnessioneDb.getId(username);
+		String query = "select distinct idCategoria from honeymoney.transazioni where transazioni.idAccount= ?;";
+		PreparedStatement ps = connectionDb().prepareStatement(query);
+		ps.setInt(1, id);
+		ResultSet result = ps.executeQuery();
+		int idCat = 0;
+		while (result.next()) {
+			idCat = + result.getInt(1);
+		}
+		return idCat;
+	}
+
+	public static void addDefaultCategorie(String username) throws ClassNotFoundException, SQLException {
+
+		int id = ConnessioneDb.getId(username);
+		String query1 = "insert into categorie (idaccount, categoria) values (?, ?);";
+		PreparedStatement ps1 = connectionDb().prepareStatement(query1);
+		ps1.setInt(1, id);
+		ps1.setString(2, "trasporto");
+		ps1.executeUpdate();
+		ps1.setInt(1, id);
+		ps1.setString(2, "bollette");
+		ps1.executeUpdate();
+		ps1.setInt(1, id);
+		ps1.setString(2, "alimentari");
+		ps1.executeUpdate();
+		ps1.setInt(1, id);
+		ps1.setString(2, "altro");
+		ps1.executeUpdate();
+	}
+
+	public static boolean checkCategorie(String username) throws ClassNotFoundException, SQLException {
+		int idCat = ConnessioneDb.getIdLinkedTocategoria(username);
+		String query = "select categoria from categorie where idaccount = ?";
+		PreparedStatement statement = connectionDb().prepareStatement(query);
+		statement.setInt(1, idCat);
+		ResultSet result = statement.executeQuery(query);
+		String categoria = null;
+		while (result.next()) {
+			categoria = result.getString(1);
+
+			if (categoria != null) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static List<Categoria> getCategorie() throws ClassNotFoundException, SQLException {
+
+		List<Categoria> listaCategorie = new ArrayList<>();
+		String query = "select categoria from categorie;";
+		Statement statement = connectionDb().createStatement();
+		ResultSet result = statement.executeQuery(query);
+		while (result.next()) {
+			String categoria = result.getString(1);
+			Categoria categoriaOgg = new Categoria (categoria);
+			listaCategorie.add(categoriaOgg);
+		}
+		return listaCategorie;
+	}
+	
+	public static void addCategoria (Categoria categoria, String username) throws ClassNotFoundException, SQLException
+	{
+		int id = ConnessioneDb.getId(username);
+		String query = "insert into categorie values categoria = ? where idaccount = ?;";
+		PreparedStatement ps = connectionDb().prepareStatement(query);
+		ps.setString(1,categoria.getCategoria());
+		ps.setInt(2, id);
+		ps.executeUpdate();
+
+	}
+
 }

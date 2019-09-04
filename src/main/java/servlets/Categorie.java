@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import connections.ConnessioneDb;
-import models.Transazione;
+import models.Categoria;
 
-public class View extends HttpServlet {
+public class Categorie extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -22,22 +22,24 @@ public class View extends HttpServlet {
 		String scelta = req.getParameter("scelta");
 		HttpSession session = req.getSession();
 		String user = (String) session.getAttribute("user");
-		List<Transazione> listaTransazioni = new ArrayList<Transazione>();
-
+		List <Categoria> listaCategorie = new ArrayList<>();
+		
 		try {
-			listaTransazioni.addAll(ConnessioneDb.getTransazioni(user));
+			listaCategorie.addAll(ConnessioneDb.getCategorie());
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
-		req.setAttribute("listaTransazioni", listaTransazioni);
+
+		req.setAttribute("listaCategorie", listaCategorie);
 
 		if ("1".equals(scelta)) {
-			getServletContext().getRequestDispatcher("/transazioniTotali.jsp").forward(req, resp);
+			getServletContext().getRequestDispatcher("/visualizzaCategorie.jsp").forward(req, resp);
 		} else if ("2".equals(scelta)) {
-
-			getServletContext().getRequestDispatcher("/transazioniPositive.jsp").forward(req, resp);
+			getServletContext().getRequestDispatcher("/inserisciCategorie.jsp").forward(req, resp);
+		} else if ("3".equals(scelta)) {
+			getServletContext().getRequestDispatcher("/modificaCategorie.jsp").forward(req, resp);
 		} else {
-			getServletContext().getRequestDispatcher("/transazioniNegative.jsp").forward(req, resp);
+			getServletContext().getRequestDispatcher("/cancellaCategorie.jsp").forward(req, resp);
 		}
 
 	}

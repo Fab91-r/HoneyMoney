@@ -4,12 +4,10 @@ public class Account {
 
 	private String username;
 	private String password;
-	private String saldo;
 
 	public Account(String username, String password) {
 		this.username = username;
 		this.password = password;
-		this.saldo = "0";
 	}
 
 	public String getUsername() {
@@ -28,18 +26,9 @@ public class Account {
 		this.password = password;
 	}
 
-	
-	public String getSaldo() {
-		return saldo;
-	}
-
-	public void setSaldo(String saldo) {
-		this.saldo = saldo;
-	}
-
 	@Override
 	public String toString() {
-		return "Account [username=" + username + ", password=" + password + ", saldo=" + saldo + "]";
+		return "Account [username=" + username + ", password=" + password + "]";
 	}
 
 	

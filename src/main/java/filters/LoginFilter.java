@@ -41,6 +41,14 @@ public class LoginFilter implements Filter{
 		session.setMaxInactiveInterval(60*30);
 		session.setAttribute("user", user);
 		try {
+			if (!(ConnessioneDb.checkCategorie(user)))
+			{
+				ConnessioneDb.addDefaultCategorie(user);
+			}
+		} catch (ClassNotFoundException | SQLException e1) {
+			e1.printStackTrace();
+		}
+		try {
 			if(ConnessioneDb.checkLogin(account)) {
 				chain.doFilter(req, res);
 			}
