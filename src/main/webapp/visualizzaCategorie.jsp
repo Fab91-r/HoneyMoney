@@ -10,7 +10,7 @@
 </head>
 <body>
 	<%
-		ArrayList<Categoria> listaCategorie = (ArrayList<Categoria>) request.getAttribute("listaCategorie");
+		ArrayList<String> listaCategorie = (ArrayList<String>) request.getAttribute("listaCategorie");
 	%>
 	<form action="benvenuto.jsp">
 		<table>
@@ -18,11 +18,11 @@
 				<th>Elenco delle categorie</th>
 			</tr>
 			<%
-				for (Categoria singolaCategoria : listaCategorie) {
+				for (String singolaCategoria : listaCategorie) {
 			%>
 
 			<tr style="background-color:#0099ff;">
-				<th><%=singolaCategoria.getCategoria()%></th>
+				<th><%=singolaCategoria%></th>
 			</tr>
 			<%
 				}

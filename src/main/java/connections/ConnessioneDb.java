@@ -155,44 +155,25 @@ public class ConnessioneDb {
 
 	}
 	
-	public static int getIdLinkedTocategoria(String username) throws ClassNotFoundException, SQLException
-	{
-		int id = ConnessioneDb.getId(username);
-		String query = "select distinct idCategoria from honeymoney.transazioni where transazioni.idAccount= ?;";
-		PreparedStatement ps = connectionDb().prepareStatement(query);
-		ps.setInt(1, id);
-		ResultSet result = ps.executeQuery();
-		int idCat = 0;
-		while (result.next()) {
-			idCat = + result.getInt(1);
-		}
-		return idCat;
-	}
 
-	public static void addDefaultCategorie(String username) throws ClassNotFoundException, SQLException {
+	public static void addDefaultCategorie() throws ClassNotFoundException, SQLException {
 
-		int id = ConnessioneDb.getId(username);
-		String query1 = "insert into categorie (idaccount, categoria) values (?, ?);";
+		String query1 = "insert into categorie (categoria) values (?);";
 		PreparedStatement ps1 = connectionDb().prepareStatement(query1);
-		ps1.setInt(1, id);
-		ps1.setString(2, "trasporto");
+		ps1.setString(1, "trasporto");
 		ps1.executeUpdate();
-		ps1.setInt(1, id);
-		ps1.setString(2, "bollette");
+		ps1.setString(1, "bollette");
 		ps1.executeUpdate();
-		ps1.setInt(1, id);
-		ps1.setString(2, "alimentari");
+		ps1.setString(1, "alimentari");
 		ps1.executeUpdate();
-		ps1.setInt(1, id);
-		ps1.setString(2, "altro");
+		ps1.setString(1, "altro");
 		ps1.executeUpdate();
 	}
 
-	public static boolean checkCategorie(String username) throws ClassNotFoundException, SQLException {
-		int idCat = ConnessioneDb.getIdLinkedTocategoria(username);
-		String query = "select categoria from categorie where idaccount = ?";
+	public static boolean checkCategorie() throws ClassNotFoundException, SQLException {
+
+		String query = "select categoria from categorie;";
 		PreparedStatement statement = connectionDb().prepareStatement(query);
-		statement.setInt(1, idCat);
 		ResultSet result = statement.executeQuery(query);
 		String categoria = null;
 		while (result.next()) {
@@ -205,29 +186,44 @@ public class ConnessioneDb {
 		return false;
 	}
 	
-	public static List<Categoria> getCategorie() throws ClassNotFoundException, SQLException {
+	public static List<String> getCategorie() throws ClassNotFoundException, SQLException {
 
-		List<Categoria> listaCategorie = new ArrayList<>();
+		List<String> listaCategorie = new ArrayList<>();
 		String query = "select categoria from categorie;";
 		Statement statement = connectionDb().createStatement();
 		ResultSet result = statement.executeQuery(query);
 		while (result.next()) {
 			String categoria = result.getString(1);
-			Categoria categoriaOgg = new Categoria (categoria);
-			listaCategorie.add(categoriaOgg);
+			listaCategorie.add(categoria);
 		}
 		return listaCategorie;
 	}
 	
-	public static void addCategoria (Categoria categoria, String username) throws ClassNotFoundException, SQLException
+	public static void addCategoria (String categoria) throws ClassNotFoundException, SQLException
 	{
-		int id = ConnessioneDb.getId(username);
-		String query = "insert into categorie values categoria = ? where idaccount = ?;";
+		String query = "insert into categorie (categoria) values (?)";
 		PreparedStatement ps = connectionDb().prepareStatement(query);
-		ps.setString(1,categoria.getCategoria());
-		ps.setInt(2, id);
+		ps.setString(1,categoria);
 		ps.executeUpdate();
 
 	}
+	
+	public static void updateCategoria(String categoria, int id) throws ClassNotFoundException, SQLException
+	{
+		String query = "update categorie set categoria = ? where idCategoria = ?";
+		PreparedStatement ps = connectionDb().prepareStatement(query);
+		ps.setString(1, categoria);
+		ps.setInt(2, id);
+		ps.executeUpdate();
+	}
+	
+	public static void deleteCategoria(int id) throws ClassNotFoundException, SQLException {
+		String query = "delete from categorie where idCategoria = ?;";
+		PreparedStatement statement = connectionDb().prepareStatement(query);
+		statement.setInt(1, id);
+		statement.executeUpdate();
+
+	}
+	
 
 }

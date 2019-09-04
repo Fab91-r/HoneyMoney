@@ -1,7 +1,6 @@
 package filters;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 
 import javax.servlet.Filter;
@@ -41,9 +40,9 @@ public class LoginFilter implements Filter{
 		session.setMaxInactiveInterval(60*30);
 		session.setAttribute("user", user);
 		try {
-			if (!(ConnessioneDb.checkCategorie(user)))
+			if (!(ConnessioneDb.checkCategorie()))
 			{
-				ConnessioneDb.addDefaultCategorie(user);
+				ConnessioneDb.addDefaultCategorie();
 			}
 		} catch (ClassNotFoundException | SQLException e1) {
 			e1.printStackTrace();

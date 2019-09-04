@@ -90,6 +90,24 @@
     <url-pattern>/insertCat</url-pattern>
   </servlet-mapping>
   
+     <servlet>
+    <servlet-name>modificaCategoria</servlet-name>
+    <servlet-class>servlets.ModifyCategoria</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>modificaCategoria</servlet-name>
+    <url-pattern>/modifyCat</url-pattern>
+  </servlet-mapping>
+  
+     <servlet>
+    <servlet-name>cancellaCategoria</servlet-name>
+    <servlet-class>servlets.DeleteCategoria</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>cancellaCategoria</servlet-name>
+    <url-pattern>/deleteCat</url-pattern>
+  </servlet-mapping>
+  
   
 <!--   <session-config> -->
 <!--   <session-timeout>15</session-timeout> -->

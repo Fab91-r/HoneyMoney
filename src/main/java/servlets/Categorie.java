@@ -22,7 +22,7 @@ public class Categorie extends HttpServlet {
 		String scelta = req.getParameter("scelta");
 		HttpSession session = req.getSession();
 		String user = (String) session.getAttribute("user");
-		List <Categoria> listaCategorie = new ArrayList<>();
+		List <String> listaCategorie = new ArrayList<>();
 		
 		try {
 			listaCategorie.addAll(ConnessioneDb.getCategorie());
