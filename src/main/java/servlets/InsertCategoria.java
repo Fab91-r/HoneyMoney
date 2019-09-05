@@ -21,9 +21,10 @@ public class InsertCategoria extends HttpServlet {
 		String user = (String) session.getAttribute("user");
 
 		String categoria = req.getParameter("categoria");
+		Categoria cat = new Categoria(categoria);
 
 		try {
-			ConnessioneDb.addCategoria(categoria);
+			ConnessioneDb.addCategoria(cat, user);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}

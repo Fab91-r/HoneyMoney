@@ -1,8 +1,5 @@
 package models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Categoria {
 
 	private String categoria;
@@ -28,6 +25,5 @@ public class Categoria {
 	public void setId(int id) {
 		this.id = id;
 	}
-
 
 }

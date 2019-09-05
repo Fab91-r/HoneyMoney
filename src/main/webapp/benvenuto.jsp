@@ -28,9 +28,10 @@
 <font color="#0099ff"><%=saldo%></font> 
 <% } %>
  &#8364</h2>
-
-<p>Le spese effettuate in questo mese sono di &#8364</p>
-<p>Le entrate in questo mese sono di &#8364</p>
+<%int saldoSpese =GestioneSaldo.getSaldoNegativoMeseCorrente(username);%>
+<%int saldoEntrate =GestioneSaldo.getSaldoPositivoMeseCorrente(username);%>
+<p>Le spese effettuate in questo mese sono di &#8364 <%=saldoSpese %></p>
+<p>Le entrate in questo mese sono di &#8364 <%=saldoEntrate %></p>
 <p>Gestisci le transazioni:</p>
 <form action="transaction" method="POST">
   <input type="radio" name="scelta" value="1"> Inserisci<br>
@@ -56,7 +57,7 @@
 <p>Visualizza le transazioni effettuate:</p>
   <input type="radio" name="scelta" value="1"> Transazioni totali <br>
   <input type="radio" name="scelta" value="2"> Transazioni positive <br>
-   <input type="radio" name="scelta" value="3"> Transazioni negtive <br>
+   <input type="radio" name="scelta" value="3"> Transazioni negative <br>
   <input type="radio" name="scelta" value="4"> Transazioni per categoria
   <br>
   <br>

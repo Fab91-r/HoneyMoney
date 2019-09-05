@@ -20,6 +20,7 @@
 </form>
 <br>
 <br>
+<hr>
  <form action="benvenuto.jsp" align="center">
  <input type="submit" value="Torna alla home">
   </form>

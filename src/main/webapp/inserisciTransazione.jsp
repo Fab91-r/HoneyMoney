@@ -1,4 +1,5 @@
-    <%@page import="manage.GestioneSaldo"%>
+<%@page import="models.Categoria"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -9,7 +10,7 @@
 </head>
 <body>
 <%String username = (String)session.getAttribute("user"); %>
-<%GestioneSaldo.getSaldoCorrente(username);%>
+ <% ArrayList<Categoria> listaCategorie = (ArrayList<Categoria>) request.getAttribute("listaCategorie"); %>
 <form action="insert" method= "POST" align="center">
   <div class="container">
     <p>Inserisci una nuova transazione</p>
@@ -21,8 +22,14 @@
     <input type="text" placeholder="  Inserisci descrizione" name="descrizione" required>
     <br>
     <br>
-    <label for="categoria"><b>Categoria</b></label>
-    <input type="text" placeholder="  Inserisci categoria" name="categoria" required>
+    <B>Categoria</B>
+      <select name="categoria">
+    <% for (Categoria singolaCategoria : listaCategorie) { %>
+ 
+  <option value="<%=singolaCategoria.getCategoria()%>"><%=singolaCategoria.getCategoria()%></option>
+<%} %>
+</select>
+<br>
     <br>
     <br>
     <label for="importo"><b>Importo</b></label>

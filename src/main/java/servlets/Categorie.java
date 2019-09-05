@@ -22,10 +22,10 @@ public class Categorie extends HttpServlet {
 		String scelta = req.getParameter("scelta");
 		HttpSession session = req.getSession();
 		String user = (String) session.getAttribute("user");
-		List <String> listaCategorie = new ArrayList<>();
+		List <Categoria> listaCategorie = new ArrayList<>();
 		
 		try {
-			listaCategorie.addAll(ConnessioneDb.getCategorie());
+			listaCategorie.addAll(ConnessioneDb.getCategorie(user));
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}

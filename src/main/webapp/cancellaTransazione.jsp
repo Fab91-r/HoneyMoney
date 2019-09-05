@@ -1,6 +1,5 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="models.Transazione"%>
-<%@page import="manage.GestioneSaldo"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -11,7 +10,6 @@
 </head>
 <body>
 <%String username = (String)session.getAttribute("user"); %>
-<%GestioneSaldo.getSaldoCorrente(username);%>
 	<%
 		ArrayList<Transazione> listaTransazioni = (ArrayList<Transazione>) request.getAttribute("listaTransazioni");
 	%>

@@ -27,12 +27,6 @@ public class DeleteTransaction extends HttpServlet{
 			e1.printStackTrace();
 		}
 		
-		try {
-			int saldo = GestioneSaldo.getSaldoCorrente(user);
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-
 		String messaggio = "TRANSAZIONE CANCELLATA CON SUCCESSO!";
 		req.setAttribute("messaggio", messaggio);
 

@@ -39,29 +39,29 @@ public class LoginFilter implements Filter{
 		HttpSession session = req.getSession();
 		session.setMaxInactiveInterval(60*30);
 		session.setAttribute("user", user);
-		try {
-			if (!(ConnessioneDb.checkCategorie()))
-			{
-				ConnessioneDb.addDefaultCategorie();
+
+			try {
+				if (!(ConnessioneDb.checkCategorie()))
+				{
+					ConnessioneDb.addDefaultAccount();
+					ConnessioneDb.addDefaultCategorie();
+				}
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
 			}
-		} catch (ClassNotFoundException | SQLException e1) {
-			e1.printStackTrace();
-		}
-		try {
-			if(ConnessioneDb.checkLogin(account)) {
-				chain.doFilter(req, res);
+	 
+			try {
+				if(ConnessioneDb.checkLogin(account)) {
+					chain.doFilter(req, res);
+				}
+				else {
+					String messaggio = "LOGIN FALLITO UTENTE NON REGISTRATO O DATI ERRATI";
+					req.setAttribute("messaggio", messaggio);
+					req.getRequestDispatcher("/intro.jsp").forward(req, res);						
+				}
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
 			}
-			else {
-				String messaggio = "LOGIN FALLITO UTENTE NON REGISTRATO O DATI ERRATI";
-				req.setAttribute("messaggio", messaggio);
-				req.getRequestDispatcher("/intro.jsp").forward(req, res);
-							
-			}
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void destroy() {

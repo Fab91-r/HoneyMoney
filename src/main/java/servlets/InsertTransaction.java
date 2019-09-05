@@ -22,14 +22,6 @@ public class InsertTransaction extends HttpServlet {
 		String user = (String)session.getAttribute("user");
 		int importo = Integer.parseInt(req.getParameter("importo"));
 		int scelta = Integer.parseInt(req.getParameter("scelta"));
-	
-		try {	
-			int saldo =GestioneSaldo.getSaldoCorrente(user);
-		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
 		
 		String data = req.getParameter("data");
 		String descrizione = req.getParameter("descrizione");

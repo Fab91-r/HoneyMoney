@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import connections.ConnessioneDb;
+import models.Categoria;
 import models.Transazione;
 
 public class Transaction extends HttpServlet {
@@ -23,13 +24,20 @@ public class Transaction extends HttpServlet {
 		HttpSession session = req.getSession();
 		String user = (String) session.getAttribute("user");
 		List<Transazione> listaTransazioni = new ArrayList<Transazione>();
-		try {
+        List <Categoria> listaCategorie = new ArrayList<>();
+        try {
 			listaTransazioni.addAll(ConnessioneDb.getTransazioni(user));
-
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
+        try {
+			listaCategorie.addAll(ConnessioneDb.getCategorie(user));
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+
 		req.setAttribute("listaTransazioni", listaTransazioni);
+		req.setAttribute("listaCategorie", listaCategorie);
 
 		if ("1".equals(scelta)) {
 			getServletContext().getRequestDispatcher("/inserisciTransazione.jsp").forward(req, resp);

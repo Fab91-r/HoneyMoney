@@ -32,11 +32,6 @@ public class ModifyTransaction extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		try {
-			int saldo = GestioneSaldo.getSaldoCorrente(user);
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
 
 		String messaggio = "TRANSAZIONE MODIFICATA CON SUCCESSO!";
 		req.setAttribute("messaggio", messaggio);

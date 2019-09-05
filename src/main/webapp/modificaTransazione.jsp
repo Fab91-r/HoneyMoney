@@ -1,6 +1,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="models.Transazione"%>
-<%@page import="manage.GestioneSaldo"%>
+<%@page import="models.Categoria"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -11,9 +11,9 @@
 </head>
 <body>
 <%String username = (String)session.getAttribute("user"); %>
-<%GestioneSaldo.getSaldoCorrente(username);%>
 	<%
 		ArrayList<Transazione> listaTransazioni = (ArrayList<Transazione>) request.getAttribute("listaTransazioni");
+	    ArrayList<Categoria> listaCategorie = (ArrayList<Categoria>) request.getAttribute("listaCategorie");
 	%>
 	<form action="modify" method="POST">
 		<table>
@@ -53,19 +53,25 @@
   <div class="container">
     <p>Modifica la transazione selezionata</p>
     <label for="data"><b>Data</b></label>
-    <input type="date" placeholder="  Inserisci data" name="data" required>
+    <input type="date" placeholder=" Inserisci data" name="data" required>
 	<br>
 	<br>
     <label for="descrizione"><b>Descrizione</b></label>
-    <input type="text" placeholder="  Inserisci descrizione" name="descrizione" required>
+    <input type="text" placeholder=" Inserisci descrizione" name="descrizione" required>
     <br>
     <br>
-    <label for="categoria"><b>Categoria</b></label>
-    <input type="text" placeholder="  Inserisci categoria" name="categoria" required>
+    <B>Categoria</B>
+      <select name="categoria">
+    <% for (Categoria singolaCategoria : listaCategorie) { %>
+ 
+  <option value="<%=singolaCategoria.getCategoria()%>"><%=singolaCategoria.getCategoria()%></option>
+<%} %>
+</select>
+<br>
     <br>
     <br>
     <label for="importo"><b>Importo</b></label>
-    <input type="text" placeholder="  Inserisci importo" name="importo" required>
+    <input type="text" placeholder=" Inserisci importo" name="importo" required>
     <input type="radio" name="scelta" value="1" required> Entrata
     <input type="radio" name="scelta" value="-1" required> Spesa
     <br>
