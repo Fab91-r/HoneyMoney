@@ -305,7 +305,25 @@ public class ConnessioneDb {
 		  }
 		  return Math.abs(saldoMese);
 		 }
-
 	
-//problema canc e mod categorie con transazioni, visuali x cat
+	public static List<Transazione> getTransazioniPerCategoria(String categoria) throws SQLException, ClassNotFoundException
+	{
+		List<Transazione> listaTransazioniPerCategoria = new ArrayList<Transazione>();
+		String query = "select idTransazione, data, descrizione, importo from transazioni where categoria = ?;";
+		PreparedStatement statement = connectionDb().prepareStatement(query);
+		statement.setString(1, categoria);
+		ResultSet result = statement.executeQuery();
+		while (result.next()) {
+			int idTrans = result.getInt(1);
+			String data = result.getString(2);
+			String descrizione = result.getString(3);
+			int importo = result.getInt(4);
+			Transazione transazione = new Transazione(data, descrizione, categoria, importo);
+			transazione.setId(idTrans);
+			listaTransazioniPerCategoria.add(transazione);
+		}
+		return listaTransazioniPerCategoria;
+	}
+	
+//problema canc e mod categorie con transazioni, visuali x cat, logout e chiusura sessione, excel
 }
