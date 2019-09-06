@@ -108,6 +108,25 @@
     <url-pattern>/deleteCat</url-pattern>
   </servlet-mapping>
   
+    <servlet>
+    <servlet-name>transazioniPerCategoria</servlet-name>
+    <servlet-class>servlets.ViewPerCategoria</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>transazioniPerCategoria</servlet-name>
+    <url-pattern>/viewCat</url-pattern>
+  </servlet-mapping>
+  
+      <servlet>
+    <servlet-name>logout</servlet-name>
+    <servlet-class>servlets.Logout</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>logout</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+  
+  
   
 <!--   <session-config> -->
 <!--   <session-timeout>15</session-timeout> -->

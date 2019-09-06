@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import connections.ConnessioneDb;
-import manage.GestioneSaldo;
 import models.Transazione;
 
 public class InsertTransaction extends HttpServlet {

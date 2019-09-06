@@ -21,7 +21,7 @@
 				for (Categoria singolaCategoria : listaCategorie) {
 			%>
 
-			<tr style="background-color:#0099ff;">
+			<tr style="background-color:#ffff00;">
 				<th><%=singolaCategoria.getCategoria()%></th>
 			</tr>
 			<%

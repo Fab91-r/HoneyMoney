@@ -1,4 +1,4 @@
-    <%@page import="manage.GestioneSaldo"%>
+    <%@page import="manage.Gestione"%>
    <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -17,7 +17,7 @@
   <%} %>
   
   <h2>Il tuo saldo &egrave
-  <%int saldo =GestioneSaldo.getSaldoCorrente(username);%>
+  <%int saldo =Gestione.getSaldoCorrente(username);%>
   <% if (saldo <0) { %>
 <font color="#ff5050"><%=saldo%></font>
 <% } %>
@@ -28,8 +28,8 @@
 <font color="#0099ff"><%=saldo%></font> 
 <% } %>
  &#8364</h2>
-<%int saldoSpese =GestioneSaldo.getSaldoNegativoMeseCorrente(username);%>
-<%int saldoEntrate =GestioneSaldo.getSaldoPositivoMeseCorrente(username);%>
+<%int saldoSpese =Gestione.getSaldoNegativoMeseCorrente(username);%>
+<%int saldoEntrate =Gestione.getSaldoPositivoMeseCorrente(username);%>
 <p>Le spese effettuate in questo mese sono di &#8364 <%=saldoSpese %></p>
 <p>Le entrate in questo mese sono di &#8364 <%=saldoEntrate %></p>
 <p>Gestisci le transazioni:</p>
@@ -62,6 +62,11 @@
   <br>
   <br>
   <input type="submit" value="Esegui">
+</form>
+<br>
+  <br>
+  <form action="logout" method="POST">
+  <input type="submit" value="Logout">
 </form>
 </body>
 </html>

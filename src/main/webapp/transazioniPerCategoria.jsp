@@ -6,24 +6,22 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Visualizza le categorie</title>
+<title>Visualizza l'elenco delle categorie</title>
 </head>
 <body>
 	<%
-		ArrayList<Categoria> listaCategorie = (ArrayList<Categoria>) request.getAttribute("listaCategorie");
+		ArrayList<Categoria> listaCategorie = (ArrayList<Categoria>) session.getAttribute("listaCategorie");
 	%>
-	<form action="benvenuto.jsp">
+	<h2>Seleziona la categoria</h2>
+	<form action="viewCat"  method="POST">
 		<table>
-			<tr>
-				<th>Elenco delle categorie</th>
-			</tr>
 			<%
 				for (Categoria singolaCategoria : listaCategorie) {
 			%>
 
-			<tr style="background-color: #0099ff;">
+			<tr style="background-color: #ffff00;">
 				<th style="text-align: center"><input type="radio"
-					name="categoria" value="<%=singolaCategoria.getId()%>"><%=singolaCategoria.getCategoria()%></th>
+					name="categoria" value="<%=singolaCategoria.getCategoria()%>" required><%=singolaCategoria.getCategoria()%></th>
 			</tr>
 			<%
 				}

@@ -25,6 +25,7 @@ public class View extends HttpServlet {
 		String user = (String) session.getAttribute("user");
 		List<Transazione> listaTransazioni = new ArrayList<Transazione>();
 		List <Categoria> listaCategorie = new ArrayList<>();
+		
 
 		try {
 			listaTransazioni.addAll(ConnessioneDb.getTransazioni(user));
@@ -36,8 +37,11 @@ public class View extends HttpServlet {
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
+		
+		
+		
 		req.setAttribute("listaTransazioni", listaTransazioni);
-		req.setAttribute("listaCategorie", listaCategorie);
+		session.setAttribute("listaCategorie", listaCategorie);
 
 		if ("1".equals(scelta)) {
 			getServletContext().getRequestDispatcher("/transazioniTotali.jsp").forward(req, resp);

@@ -12,6 +12,7 @@
 	<%
 		ArrayList<Transazione> listaTransazioni = (ArrayList<Transazione>) request.getAttribute("listaTransazioni");
 	%>
+	<h2>Elenco di tutte le transazioni negative effettuate</h2>
 	<form action="benvenuto.jsp">
 		<table>
 			<tr>

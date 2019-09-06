@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import connections.ConnessioneDb;
-import manage.GestioneSaldo;
+
 
 public class DeleteTransaction extends HttpServlet{
 	

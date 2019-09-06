@@ -6,12 +6,14 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Cancella categoria</title>
+<title>Elimina categoria</title>
 </head>
 <body>
 	<%
 		ArrayList<Categoria> listaCategorie = (ArrayList<Categoria>) request.getAttribute("listaCategorie");
 	%>
+	<h2>Seleziona la categoria da eliminare<h2>
+	<h3>Le categorie di default (Trasporti, Bollette, Alimentari, Altro) non possono essere eliminate</h3>
 	<form action="deleteCat" method="POST">
 		<table>
 			<tr>
@@ -22,13 +24,13 @@
 			%>
 			<% if(singolaCategoria.getCategoria().equals("trasporto") || singolaCategoria.getCategoria().equals("bollette") ||
 					singolaCategoria.getCategoria().equals("alimentari") || singolaCategoria.getCategoria().equals("altro")) { %>
-			<tr style="background-color:#0099ff;">
+			<tr style="background-color:#ffff00;">
 				<th style="text-align: left">
 				<input type="radio" name="categoria" value="<%=singolaCategoria.getId()%>" disabled><%=singolaCategoria.getCategoria()%></th>
 			</tr>
 			<%} if(!(singolaCategoria.getCategoria().equals("trasporto") || singolaCategoria.getCategoria().equals("bollette") ||
 					singolaCategoria.getCategoria().equals("alimentari") || singolaCategoria.getCategoria().equals("altro")))  { %>
-			<tr style="background-color:#0099ff;">
+			<tr style="background-color:#ffff00;">
 			<th style="text-align: left">
 			<input type="radio" name="categoria" value="<%=singolaCategoria.getId()%>"><%=singolaCategoria.getCategoria()%></th>
 		</tr>

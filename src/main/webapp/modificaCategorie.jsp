@@ -12,6 +12,8 @@
 	<%
 		ArrayList<Categoria> listaCategorie = (ArrayList<Categoria>) request.getAttribute("listaCategorie");
 	%>
+	<h2>Seleziona la categoria da modificare</h2>
+	<h3>Le categorie di default (Trasporti, Bollette, Alimentari, Altro) non possono essere modificate</h3>
 	<form action="modifyCat" method="POST">
 		<table>
 			<tr>
@@ -22,13 +24,13 @@
 			%>
 			<% if(singolaCategoria.getCategoria().equals("trasporto") || singolaCategoria.getCategoria().equals("bollette") ||
 					singolaCategoria.getCategoria().equals("alimentari") || singolaCategoria.getCategoria().equals("altro")) { %>
-			<tr style="background-color:#0099ff;">
+			<tr style="background-color:#ffff00;">
 				<th style="text-align: left">
 				<input type="radio" name="categoria" value="<%=singolaCategoria.getId()%>" disabled><%=singolaCategoria.getCategoria()%></th>
 			</tr>
 			<%} if(!(singolaCategoria.getCategoria().equals("trasporto") || singolaCategoria.getCategoria().equals("bollette") ||
 					singolaCategoria.getCategoria().equals("alimentari") || singolaCategoria.getCategoria().equals("altro")))  { %>
-			<tr style="background-color:#0099ff;">
+			<tr style="background-color:#ffff00;">
 			<th style="text-align: left">
 			<input type="radio" name="categoria" value="<%=singolaCategoria.getId()%>"><%=singolaCategoria.getCategoria()%></th>
 		</tr>
