@@ -8,9 +8,10 @@
 </head>
 <body>
 <%String username = (String)session.getAttribute("user"); %>
+<h2>Inserisci una nuova categoria</h2>
 <form action="insertCat" method= "POST" align="center">
   <div class="container">
-    <p>Inserisci una nuova categoria</p>
+    
     <label for="categoria"><b>Categoria</b></label>
     <input type="text" placeholder=" Inserisci categoria" name="categoria" required>
 	<br>

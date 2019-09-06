@@ -40,7 +40,12 @@
 	<br>
 	<br>
     <hr>
-     <input type="submit" value="Cancella">
+    <% if(listaCategorie.size() == 4) { %>
+     <input type="submit" value="Cancella" disabled>
+     <%} %>
+     <% if(listaCategorie.size() > 4) { %>
+     <input type="submit" value="Cancella" >
+     <%} %>
 </form>
 	<br>
 	<br>

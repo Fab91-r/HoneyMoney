@@ -111,6 +111,7 @@ public class ConnessioneDb {
 		return saldo;
 	}
 
+	
 	public static List<Transazione> getTransazioni(String username) throws ClassNotFoundException, SQLException {
 
 		List<Transazione> listaTransazioni = new ArrayList<Transazione>();
@@ -148,6 +149,30 @@ public class ConnessioneDb {
 		ps.setInt(5, id);
 		ps.executeUpdate();
 
+	}
+	
+	public static int getIdCategoriaCategori(Categoria categoria) throws ClassNotFoundException, SQLException
+	{
+		String query = "select idCategoria from categorie where categoria = ?;";
+		PreparedStatement ps = connectionDb().prepareStatement(query);
+		ps.setString(1,  categoria.getCategoria());
+		ResultSet result = ps.executeQuery();
+		int idCategoria = 0;
+		while(result.next()) {
+			idCategoria = result.getInt(1);
+		}
+		
+		return idCategoria;
+		
+	}
+	public static void updateTransazionePerCategoria(Transazione transazione, int id)
+			throws ClassNotFoundException, SQLException {
+
+		String query = "update transazioni set idCategoria = ? where idTransazione = ?";
+		PreparedStatement ps = connectionDb().prepareStatement(query);
+		ps.setString(1, transazione.getCategoria());
+		ps.setInt(2, id);
+		ps.executeUpdate();
 	}
 
 	public static void deleteTransazione(int id) throws ClassNotFoundException, SQLException {
