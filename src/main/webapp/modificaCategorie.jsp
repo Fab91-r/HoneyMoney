@@ -31,7 +31,7 @@
 			%>
 			<tr style="background-color: #ffff00;">
 				<th style="text-align: left"><input type="radio"
-					name="categoria" value="<%=singolaCategoria.getId()%>" disabled><%=singolaCategoria.getCategoria()%></th>
+					name="oldCategoria" value="<%=singolaCategoria.getId()%>" disabled><%=singolaCategoria.getCategoria()%></th>
 			</tr>
 			<%
 				}
@@ -42,7 +42,7 @@
 			%>
 			<tr style="background-color: #ffff00;">
 				<th style="text-align: left"><input type="radio"
-					name="categoria" value="<%=singolaCategoria.getId()%>"><%=singolaCategoria.getCategoria()%></th>
+					name="oldCategoria" value="<%=singolaCategoria.getId()%>" required><%=singolaCategoria.getCategoria()%></th>
 			</tr>
 			<%
 				}
@@ -51,15 +51,13 @@
 
 		</table>
 
-
+	<p>Modifica la categoria selezionata</p>
 		<div class="container">
-			<p>Modifica la categoria selezionata</p>
-
 			<%
 				if (listaCategorie.size() == 4) {
 			%>
 			<label for="categoria"><b>Categoria</b></label> <input type="text"
-				placeholder=" Inserisci categoria" name="categoriaNuova" required
+				placeholder=" Inserisci categoria" name="newCategoria" required
 				disabled> <br> <br>
 			<hr>
 			<input type="submit" value="Modifica" disabled>
@@ -70,10 +68,8 @@
 				if (listaCategorie.size() > 4) {
 			%>
 			<div class="container">
-				<p>Modifica la categoria selezionata</p>
-
 				<label for="categoria"><b>Categoria</b></label> <input type="text"
-					placeholder=" Inserisci categoria" name="categoriaNuova" required>
+					placeholder=" Inserisci categoria" name="newCategoria" required>
 				<br> <br>
 				<hr>
 				<input type="submit" value="Modifica">

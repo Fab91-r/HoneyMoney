@@ -32,7 +32,7 @@
 					singolaCategoria.getCategoria().equals("alimentari") || singolaCategoria.getCategoria().equals("altro")))  { %>
 			<tr style="background-color:#ffff00;">
 			<th style="text-align: left">
-			<input type="radio" name="categoria" value="<%=singolaCategoria.getId()%>"><%=singolaCategoria.getCategoria()%></th>
+			<input type="radio" name="categoria" value="<%=singolaCategoria.getId()%>" required><%=singolaCategoria.getCategoria()%></th>
 		</tr>
 			<% }}%>
 			
@@ -41,10 +41,10 @@
 	<br>
     <hr>
     <% if(listaCategorie.size() == 4) { %>
-     <input type="submit" value="Cancella" disabled>
+     <input type="submit" value="Elimina" disabled>
      <%} %>
      <% if(listaCategorie.size() > 4) { %>
-     <input type="submit" value="Cancella" >
+     <input type="submit" value="Elimina" >
      <%} %>
 </form>
 	<br>

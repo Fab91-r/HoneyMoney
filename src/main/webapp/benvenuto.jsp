@@ -1,4 +1,4 @@
-    <%@page import="manage.Gestione"%>
+   <%@page import="manage.Gestione"%>
    <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -14,6 +14,10 @@
   <% if(request.getAttribute("messaggio") != null) {%>
   <%String messaggio = (String)request.getAttribute("messaggio");  %> 
   <p style="color:#00cc00;"><%=messaggio %> </p>
+  <%} %>
+   <% if(request.getAttribute("messaggio2") != null) {%>
+  <%String messaggio2 = (String)request.getAttribute("messaggio2");  %> 
+  <p style="color:#ff0000;"><%=messaggio2 %> </p>
   <%} %>
   
   <h2>Il tuo saldo &egrave
@@ -32,6 +36,7 @@
 <%int saldoEntrate =Gestione.getSaldoPositivoMeseCorrente(username);%>
 <p>Le spese effettuate in questo mese sono di &#8364 <%=saldoSpese %></p>
 <p>Le entrate in questo mese sono di &#8364 <%=saldoEntrate %></p>
+<hr>
 <p>Gestisci le transazioni:</p>
 <form action="transaction" method="POST">
   <input type="radio" name="scelta" value="1"> Inserisci<br>
@@ -63,10 +68,9 @@
   <br>
   <input type="submit" value="Esegui">
 </form>
-<br>
-  <br>
+<hr>
   <form action="logout" method="POST">
-  <input type="submit" value="Logout">
+  <input type="submit" value="Logout" style="color:#ff0000">
 </form>
 </body>
 </html>

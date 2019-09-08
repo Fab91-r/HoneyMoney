@@ -1,16 +1,15 @@
 package manage;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
-import com.sun.tools.javac.util.List;
-
+import java.util.Date;
 import connections.ConnessioneDb;
 import models.Categoria;
 
 public class Gestione {
 	
-	static public int getSaldoCorrente (String username) throws ClassNotFoundException, SQLException {
+	public static int getSaldoCorrente (String username) throws ClassNotFoundException, SQLException {
 		
 		int saldo = ConnessioneDb.getSaldo(username);		 
 		return saldo;  	
@@ -35,6 +34,14 @@ public class Gestione {
 		lista.addAll(ConnessioneDb.getCategorie(username));
 		
 		return lista;
+	}
+	
+	public static String getDataAttuale ()
+	{
+		Date now = new Date();
+		SimpleDateFormat data = new SimpleDateFormat("yyyy-MM-dd");
+		String data1 = data.format(now);
+		return data1;
 	}
 
 }

@@ -9,7 +9,7 @@
 <body>
 <%String username = (String)session.getAttribute("user"); %>
 <h2>Inserisci una nuova categoria</h2>
-<form action="insertCat" method= "POST" align="center">
+<form action="insertCat" method= "POST">
   <div class="container">
     
     <label for="categoria"><b>Categoria</b></label>
@@ -22,7 +22,7 @@
 <br>
 <br>
 <hr>
- <form action="benvenuto.jsp" align="center">
+ <form action="benvenuto.jsp">
  <input type="submit" value="Torna alla home">
   </form>
   <br>

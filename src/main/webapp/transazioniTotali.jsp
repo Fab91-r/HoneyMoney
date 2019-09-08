@@ -13,7 +13,7 @@
 		ArrayList<Transazione> listaTransazioni = (ArrayList<Transazione>) request.getAttribute("listaTransazioni");
 	%>
 	<h2>Elenco di tutte le transazioni effettuate</h2>
-	<form action="benvenuto.jsp">
+	
 		<table>
 			<tr>
 				<th>Data</th>
@@ -24,8 +24,10 @@
 			<%
 				for (Transazione singolaTransazione : listaTransazioni) {
 			%>
-			<% if (singolaTransazione.getImporto()>= 0) {%>
-			<tr style="background-color:#0099ff;">
+			<%
+				if (singolaTransazione.getImporto() >= 0) {
+			%>
+			<tr style="background-color: #0099ff;">
 				<th><%=singolaTransazione.getData()%></th>
 				<th><%=singolaTransazione.getDescrizione()%></th>
 				<th><%=singolaTransazione.getCategoria()%></th>
@@ -34,21 +36,32 @@
 			<%
 				}
 			%>
-			<% if (singolaTransazione.getImporto() < 0){ %>
-			<tr style="background-color:#ff5050;">
+			<%
+				if (singolaTransazione.getImporto() < 0) {
+			%>
+			<tr style="background-color: #ff5050;">
 				<th><%=singolaTransazione.getData()%></th>
 				<th><%=singolaTransazione.getDescrizione()%></th>
 				<th><%=singolaTransazione.getCategoria()%></th>
 				<th><%=singolaTransazione.getImporto()%></th>
 			</tr>
-				<%
-				} 
-			}
+			<%
+				}
+				}
 			%>
 
 		</table>
-			<br>
-		<input type="submit" value="Torna alla Home">
+
+	<br>
+	<hr>
+	<p> Genera un file Excel con tutte le transazioni effettuate</p>
+	<form action="excel" method="POST">
+		<input type="submit" value="Genera File">
+	</form>
+	<br>
+	<hr>
+	<form action="benvenuto.jsp">
+	<input type="submit" value="Torna alla Home">
 	</form>
 </body>
 </html>

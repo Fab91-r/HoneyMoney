@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import connections.ConnessioneDb;
+import manage.Gestione;
 import models.Categoria;
 import models.Transazione;
 
@@ -25,17 +26,16 @@ public class Transaction extends HttpServlet {
 		String user = (String) session.getAttribute("user");
 		List<Transazione> listaTransazioni = new ArrayList<Transazione>();
         List <Categoria> listaCategorie = new ArrayList<>();
-        try {
+       try {
 			listaTransazioni.addAll(ConnessioneDb.getTransazioni(user));
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+			e.printStackTrace(); 
 		}
         try {
 			listaCategorie.addAll(ConnessioneDb.getCategorie(user));
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
-
 		req.setAttribute("listaTransazioni", listaTransazioni);
 		req.setAttribute("listaCategorie", listaCategorie);
 

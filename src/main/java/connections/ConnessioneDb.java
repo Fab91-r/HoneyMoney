@@ -111,7 +111,6 @@ public class ConnessioneDb {
 		return saldo;
 	}
 
-	
 	public static List<Transazione> getTransazioni(String username) throws ClassNotFoundException, SQLException {
 
 		List<Transazione> listaTransazioni = new ArrayList<Transazione>();
@@ -150,30 +149,7 @@ public class ConnessioneDb {
 		ps.executeUpdate();
 
 	}
-	
-	public static int getIdCategoriaCategori(Categoria categoria) throws ClassNotFoundException, SQLException
-	{
-		String query = "select idCategoria from categorie where categoria = ?;";
-		PreparedStatement ps = connectionDb().prepareStatement(query);
-		ps.setString(1,  categoria.getCategoria());
-		ResultSet result = ps.executeQuery();
-		int idCategoria = 0;
-		while(result.next()) {
-			idCategoria = result.getInt(1);
-		}
-		
-		return idCategoria;
-		
-	}
-	public static void updateTransazionePerCategoria(Transazione transazione, int id)
-			throws ClassNotFoundException, SQLException {
 
-		String query = "update transazioni set idCategoria = ? where idTransazione = ?";
-		PreparedStatement ps = connectionDb().prepareStatement(query);
-		ps.setString(1, transazione.getCategoria());
-		ps.setInt(2, id);
-		ps.executeUpdate();
-	}
 
 	public static void deleteTransazione(int id) throws ClassNotFoundException, SQLException {
 		String query = "delete from transazioni where idTransazione = ?;";
@@ -182,45 +158,42 @@ public class ConnessioneDb {
 		statement.executeUpdate();
 
 	}
-	
-	public static void addDefaultAccount() throws ClassNotFoundException, SQLException  
-	{
+
+	public static void addDefaultAccount() throws ClassNotFoundException, SQLException {
 		String query = "insert into account (username, password) values (?,?);";
 		PreparedStatement ps = connectionDb().prepareStatement(query);
 		ps.setString(1, "default");
 		ps.setString(2, "default");
 		ps.executeUpdate();
 	}
-	
-	public static int getIdDefaultAccount() throws ClassNotFoundException, SQLException
-	{
-		String query = "select idAccount from account where username = \'default\';" ;
+
+	public static int getIdDefaultAccount() throws ClassNotFoundException, SQLException {
+		String query = "select idAccount from account where username = \'default\';";
 		Statement statement = connectionDb().createStatement();
 		ResultSet result = statement.executeQuery(query);
 		int id = 0;
-		while(result.next())
-		{
+		while (result.next()) {
 			id = result.getInt(1);
-			
+
 		}
-		 return id;
+		return id;
 	}
 
 	public static void addDefaultCategorie() throws ClassNotFoundException, SQLException {
-	    
+
 		int idDefaultAccount = ConnessioneDb.getIdDefaultAccount();
 		String query = "insert into categorie (account, categoria) values (?,?);";
 		PreparedStatement ps = connectionDb().prepareStatement(query);
 		ps.setInt(1, idDefaultAccount);
 		ps.setString(2, "trasporto");
 		ps.executeUpdate();
-		ps.setInt(1,  idDefaultAccount);
+		ps.setInt(1, idDefaultAccount);
 		ps.setString(2, "bollette");
 		ps.executeUpdate();
-		ps.setInt(1,  idDefaultAccount);
+		ps.setInt(1, idDefaultAccount);
 		ps.setString(2, "alimentari");
 		ps.executeUpdate();
-		ps.setInt(1,  idDefaultAccount);
+		ps.setInt(1, idDefaultAccount);
 		ps.setString(2, "altro");
 		ps.executeUpdate();
 	}
@@ -230,7 +203,7 @@ public class ConnessioneDb {
 		int idDefaultAccount = ConnessioneDb.getIdDefaultAccount();
 		String query = "select categoria from categorie where account = ?;";
 		PreparedStatement statement = connectionDb().prepareStatement(query);
-		statement.setInt(1, idDefaultAccount );
+		statement.setInt(1, idDefaultAccount);
 		ResultSet result = statement.executeQuery();
 		String categoria = null;
 		while (result.next()) {
@@ -242,7 +215,7 @@ public class ConnessioneDb {
 		}
 		return false;
 	}
-	
+
 	public static List<Categoria> getCategorie(String username) throws ClassNotFoundException, SQLException {
 
 		int idAccount = ConnessioneDb.getId(username);
@@ -250,8 +223,8 @@ public class ConnessioneDb {
 		List<Categoria> listaCategorie = new ArrayList<>();
 		String query = "select idCategoria, categoria from categorie where account = (?) or account = (?);";
 		PreparedStatement statement = connectionDb().prepareStatement(query);
-		statement.setInt (1, idAccount);
-		statement.setInt (2, idDefaultAccount);
+		statement.setInt(1, idAccount);
+		statement.setInt(2, idDefaultAccount);
 		ResultSet result = statement.executeQuery();
 		while (result.next()) {
 			int id = result.getInt(1);
@@ -262,27 +235,38 @@ public class ConnessioneDb {
 		}
 		return listaCategorie;
 	}
-	
-	public static void addCategoria (Categoria categoria, String username) throws ClassNotFoundException, SQLException
-	{
+
+	public static String getCategoria(int idCategoria) throws ClassNotFoundException, SQLException {
+
+		String query = "select categoria from categorie where idCategoria = (?)";
+		PreparedStatement statement = connectionDb().prepareStatement(query);
+		statement.setInt(1, idCategoria);
+		ResultSet result = statement.executeQuery();
+		String categoria = null;
+		while (result.next()) {
+			categoria = result.getString(1);
+		}
+		return categoria;
+	}
+
+	public static void addCategoria(Categoria categoria, String username) throws ClassNotFoundException, SQLException {
 		int idAccount = ConnessioneDb.getId(username);
 		String query = "insert into categorie (account, categoria) values (?, ?)";
 		PreparedStatement ps = connectionDb().prepareStatement(query);
-		ps.setInt(1,  idAccount);
-		ps.setString(2,categoria.getCategoria());
+		ps.setInt(1, idAccount);
+		ps.setString(2, categoria.getCategoria());
 		ps.executeUpdate();
 
 	}
-	
-	public static void updateCategoria(Categoria categoria, int id) throws ClassNotFoundException, SQLException
-	{
+
+	public static void updateCategoria(Categoria categoria, int id) throws ClassNotFoundException, SQLException {
 		String query = "update categorie set categoria = ? where idCategoria = ?";
 		PreparedStatement ps = connectionDb().prepareStatement(query);
 		ps.setString(1, categoria.getCategoria());
 		ps.setInt(2, id);
 		ps.executeUpdate();
 	}
-	
+
 	public static void deleteCategoria(int id) throws ClassNotFoundException, SQLException {
 		String query = "delete from categorie where idCategoria = ?;";
 		PreparedStatement statement = connectionDb().prepareStatement(query);
@@ -290,65 +274,86 @@ public class ConnessioneDb {
 		statement.executeUpdate();
 
 	}
-	
+
 	public static int getSpese(String username) throws ClassNotFoundException, SQLException {
-		  int id = ConnessioneDb.getId(username);
-		  int saldoMese = 0;
-		  Date date = new Date();
-		  LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		  int month = localDate.getMonthValue();
-		  List<Transazione> lista = new ArrayList<Transazione>();
-		  lista.addAll(ConnessioneDb.getTransazioni(username));
-		  for (Transazione trans : lista) {
-		   String[] data = trans.getData().split("-");
-		   int mese = Integer.parseInt(data[1]);
-		   if (mese == month) {
-		    if (trans.getImporto() < 0) {
-		     saldoMese += trans.getImporto();
-		    }
-		   }
-		  }
-		  return Math.abs(saldoMese);
-		 }
-	
+		int id = ConnessioneDb.getId(username);
+		int saldoMese = 0;
+		Date date = new Date();
+		LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		int month = localDate.getMonthValue();
+		List<Transazione> lista = new ArrayList<Transazione>();
+		lista.addAll(ConnessioneDb.getTransazioni(username));
+		for (Transazione trans : lista) {
+			String[] data = trans.getData().split("-");
+			int mese = Integer.parseInt(data[1]);
+			if (mese == month) {
+				if (trans.getImporto() < 0) {
+					saldoMese += trans.getImporto();
+				}
+			}
+		}
+		return Math.abs(saldoMese);
+	}
+
 	public static int getEntrate(String username) throws ClassNotFoundException, SQLException {
-		  int id = ConnessioneDb.getId(username);
-		  int saldoMese = 0;
-		  Date date = new Date();
-		  LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		  int month = localDate.getMonthValue();
-		  List<Transazione> lista = new ArrayList<Transazione>();
-		  lista.addAll(ConnessioneDb.getTransazioni(username));
-		  for (Transazione trans : lista) {
-		   String[] data = trans.getData().split("-");
-		   int mese = Integer.parseInt(data[1]);
-		   if (mese == month) {
-		    if (trans.getImporto() > 0) {
-		     saldoMese += trans.getImporto();
-		    }
-		   }
-		  }
-		  return Math.abs(saldoMese);
-		 }
-	
-	public static List<Transazione> getTransazioniPerCategoria(String categoria) throws SQLException, ClassNotFoundException
-	{
+		int id = ConnessioneDb.getId(username);
+		int saldoMese = 0;
+		Date date = new Date();
+		LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		int month = localDate.getMonthValue();
+		List<Transazione> lista = new ArrayList<Transazione>();
+		lista.addAll(ConnessioneDb.getTransazioni(username));
+		for (Transazione trans : lista) {
+			String[] data = trans.getData().split("-");
+			int mese = Integer.parseInt(data[1]);
+			if (mese == month) {
+				if (trans.getImporto() > 0) {
+					saldoMese += trans.getImporto();
+				}
+			}
+		}
+		return Math.abs(saldoMese);
+	}
+
+	public static List<Transazione> getTransazioniPerCategoria(Categoria categoria, String username)
+			throws SQLException, ClassNotFoundException {
+		int idAccount = ConnessioneDb.getId(username);
 		List<Transazione> listaTransazioniPerCategoria = new ArrayList<Transazione>();
-		String query = "select idTransazione, data, descrizione, importo from transazioni where categoria = ?;";
+		String query = "select idTransazione, data, descrizione, importo from transazioni where idAccount= ? and categoria = ?;";
 		PreparedStatement statement = connectionDb().prepareStatement(query);
-		statement.setString(1, categoria);
+		statement.setInt(1, idAccount);
+		statement.setString(2, categoria.getCategoria());
 		ResultSet result = statement.executeQuery();
 		while (result.next()) {
 			int idTrans = result.getInt(1);
 			String data = result.getString(2);
 			String descrizione = result.getString(3);
 			int importo = result.getInt(4);
-			Transazione transazione = new Transazione(data, descrizione, categoria, importo);
+			Transazione transazione = new Transazione(data, descrizione, categoria.getCategoria(), importo);
 			transazione.setId(idTrans);
 			listaTransazioniPerCategoria.add(transazione);
 		}
 		return listaTransazioniPerCategoria;
 	}
-	
-//problema canc e mod categorie con transazioni, visuali x cat, logout e chiusura sessione, excel
+
+	public static void updateTransazioniPerCategoria(Categoria oldCategoria, Categoria newCategoria, String username)
+			throws SQLException, ClassNotFoundException {
+		int idAccount = ConnessioneDb.getId(username);
+		String query = "select idTransazione from transazioni where idAccount= ? and categoria = ?;";
+		PreparedStatement statement = connectionDb().prepareStatement(query);
+		statement.setInt(1, idAccount);
+		statement.setString(2, oldCategoria.getCategoria());
+		ResultSet result = statement.executeQuery();
+		int idTransazione = 0;
+		while (result.next()) {
+		    idTransazione = result.getInt(1);
+		    String query2 = "update transazioni set categoria = ? where idTransazione = ?;";
+		    PreparedStatement statement2 = connectionDb().prepareStatement(query2);
+		    statement2.setString(1, newCategoria.getCategoria());
+			statement2.setInt(2, idTransazione);
+			statement2.executeUpdate();
+	}
+		
+	}
+
 }

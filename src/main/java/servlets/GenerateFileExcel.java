@@ -12,42 +12,30 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import connections.ConnessioneDb;
-import models.Categoria;
+import excel.FileExcel;
 import models.Transazione;
 
-public class ModifyCategoria extends HttpServlet{
+public class GenerateFileExcel extends HttpServlet{
 	
+
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+		
 		HttpSession session = req.getSession();
 		String user = (String) session.getAttribute("user");
-		int idCategoria = Integer.parseInt(req.getParameter("oldCategoria"));
+		List<Transazione> listaTransazioni = new ArrayList<Transazione>();
 		
-		String oldCategoria = null;
 		try {
-			oldCategoria = ConnessioneDb.getCategoria(idCategoria);
-		} catch (ClassNotFoundException | SQLException e1) {
-			e1.printStackTrace();
-		}
-		String newCategoria = req.getParameter("newCategoria");
-		Categoria cat1 = new Categoria(oldCategoria);
-		Categoria cat2 = new Categoria(newCategoria);
-		
-
-		try {
-			ConnessioneDb.updateCategoria(cat2, idCategoria);
+			listaTransazioni.addAll(ConnessioneDb.getTransazioni(user));
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+			e.printStackTrace(); 
 		}
 		
-		try {
-			ConnessioneDb.updateTransazioniPerCategoria(cat1, cat2, user);
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-
-		String messaggio = "CATEGORIA MODIFICATA CON SUCCESSO!";
+		FileExcel.createFileExcel(listaTransazioni);
+		
+		String messaggio = "FILE GENERATO CON SUCCESSO!";
 		req.setAttribute("messaggio", messaggio);
 
 		getServletContext().getRequestDispatcher("/benvenuto.jsp").forward(req, resp);

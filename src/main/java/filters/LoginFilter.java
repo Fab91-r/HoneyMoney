@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import connections.ConnessioneDb;
+import excel.FileExcel;
 import models.Account;
 
 
@@ -39,7 +40,6 @@ public class LoginFilter implements Filter{
 		HttpSession session = req.getSession();
 		session.setMaxInactiveInterval(60*30);
 		session.setAttribute("user", user);
-
 			try {
 				if (!(ConnessioneDb.checkCategorie()))
 				{

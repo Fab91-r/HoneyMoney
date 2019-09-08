@@ -15,6 +15,7 @@
 		ArrayList<Transazione> listaTransazioni = (ArrayList<Transazione>) request.getAttribute("listaTransazioni");
 	    ArrayList<Categoria> listaCategorie = (ArrayList<Categoria>) request.getAttribute("listaCategorie");
 	%>
+	 <h2>Seleziona la transazione da modificare</h2>
 	<form action="modify" method="POST">
 		<table>
 			<tr>
@@ -50,8 +51,8 @@
 				}	
 			%>
 		</table>
-  <div class="container">
-    <p>Modifica la transazione selezionata</p>
+		<p>Modifica la transazione selezionata</p>
+  <div class="container">   
     <label for="data"><b>Data</b></label>
     <input type="date" placeholder=" Inserisci data" name="data" required>
 	<br>

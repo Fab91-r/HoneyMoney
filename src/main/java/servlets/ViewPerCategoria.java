@@ -24,9 +24,10 @@ public class ViewPerCategoria extends HttpServlet {
 		String user = (String) session.getAttribute("user");
 		String categoria = req.getParameter("categoria");
 		List<Transazione> listaTransazioniPerCategoria = new ArrayList<>();
+		Categoria cat = new Categoria(categoria);
 
 		try {
-			listaTransazioniPerCategoria.addAll(ConnessioneDb.getTransazioniPerCategoria(categoria));
+			listaTransazioniPerCategoria.addAll(ConnessioneDb.getTransazioniPerCategoria(cat, user));
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}

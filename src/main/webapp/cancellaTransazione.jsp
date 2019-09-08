@@ -13,6 +13,7 @@
 	<%
 		ArrayList<Transazione> listaTransazioni = (ArrayList<Transazione>) request.getAttribute("listaTransazioni");
 	%>
+	<h2>Seleziona la transazione da eliminare</h2>
 	<form action="delete" method="POST">
 		<table>
 			<tr>
@@ -50,7 +51,7 @@
 		</table>
 	<br>
 	<br>
-     <input type="submit" value="Cancella">
+     <input type="submit" value="Elimina">
 </form>
 	<br>
 	<br>
